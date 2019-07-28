@@ -1,9 +1,18 @@
 {% extends 'base.html' %} {% import 'macros.html' as macro%}
 
-<!-- styles block -->
-{% block styles%}
-{{ super() }}
-<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" />
-{% endblock styles%}
-
 {% block content %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock%}
+
+<!--content block-->
+{% block content %}
+
+<!--Headlines-->
+<div class="cointainer">
+<h1 class="text-center"><center> WELCOME TO NEWS HIGHLIGHTS </center></h1>
+<ul>
+    {{macro.displayHeadlinesList(headlines)}}
+</ul>
+</div>
+{% endblock %}
