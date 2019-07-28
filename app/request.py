@@ -44,17 +44,36 @@ def process_results(sources_list):
         sources_results:A list of new source objects   
     '''
 
-    sources_results=[]
-    for source_item in sources_list:
-        id=source_item.get('id')
-        name=source_item.get('name')
-        desc=source_item.get('description')
-        url=source_item.get('url')
-        category=source_item.get('category')
-        language=source_item.get('language')
-        country=source_item.get('country')
+        sources_results=[]
+        for source_item in sources_list:
+            id=source_item.get('id')
+            name=source_item.get('name')
+            desc=source_item.get('description')
+            url=source_item.get('url')
+            category=source_item.get('category')
+            language=source_item.get('language')
+            country=source_item.get('country')
 
-        source_obj=Source(id,name,desc,url,category,language,country)
-        sources_results.append(source_obj)
+            source_obj=Source(id,name,desc,url,category,language,country)
+            sources_results.append(source_obj)
 
     return sources_results 
+
+def get_articles(id):
+    '''
+    function that takes in a source id and returns a source article object
+    '''
+
+    get_articles_url=articles_base_url.format(id,api_key)
+
+    with urllib.request.urlopen(get_articles_url) as url:
+        get_articles_data=url.read()
+        get_articles_response=json.loads(get_articles_data)
+
+        articles_results=None
+
+        if get_articles_response['articles']:
+            articles_result_list=get_articles_response['articles']
+            articles_results=process_article_results(articles_result_list)
+
+    return articles_results  
