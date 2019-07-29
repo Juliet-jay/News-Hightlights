@@ -1,17 +1,4 @@
-{% macro werftgyhujdf(source_list) %}
 
-    {% for newSource in source_list%}
-    <div class = "row*4">
-        <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 headlines-card">
-            <h1 class = "headline-title"><b>{{ headline.title|truncate (70) }}</b></h1>
-                <img src = "{{headline.urlToImage}}" alt = "{{headline.title}} image" class = "img-responsive">
-                <p>{{ headline.description|truncate(50)}}</p>
-                <p><b>Published by</b> {{ headline.author}} <b>on</b> {{ headline.publishedAt}}</p>
-                <a href = {{headline.url}}><button class = "btn btn-danger">View Story</button></a>
-        </div>
-    </div>
-    {% endfor %}
-{% endmacro %}
 
 {% macro displaySourcesList(sources_list) %}
     {% for source in sources_list%}
@@ -19,11 +6,45 @@
             <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 sources-card">
                 <p class="source-name"><b>{{ source.name}}</b></p>
                 <p class = "source-descr">{{source.description}}</p>
-                <a href ="{{source.id}}"><button class = "btn btn-danger">View News Source</button></a>
+                <a href ="/sources_articles/{{source.id}}"><button class = "btn btn-danger">View News Source</button></a>
             </div>
         
  
     {% endfor %}
 {% endmacro %}
+
+    <!-- end latest macro -->
+    
+    {% macro displayArticles(article_list) %} {% for article in article_list %}
+    <div class="col-sm-12 mb-3">
+      <div class="row inside-cols">
+        <div class="col-sm-4 img-cols">
+          <img
+            src="{{ article.urlToImage }}"
+            alt="{{ article.title }}"
+            class="img-responsive"
+          />
+        </div>
+        <div class="col-sm-8 ">
+          <div class="heading">
+            <h5 class="text-primary">{{ article.author }}</h5>
+            <span class="text-muted">{{ article.publishedAt }}</span>
+            <span>     
+          </div>
+          <h2 class="text-title">
+              <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+            </h2>
+          <p class="lead">{{ article.content }}</p>
+        </div>
+    
+      </div>
+    </div>
+    
+    {% endfor %} {% endmacro%}
+    
+    
+
+
+
             
 

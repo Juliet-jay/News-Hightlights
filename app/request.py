@@ -13,7 +13,7 @@ api_key = app.config['NEWS_API_KEY']
 
 #getting source url
 sources_base_url = app.config['NEWS_SOURCES_BASE_URL']
-article_base_url = app.config['NEWS_ARTICLE_BASE_URL']
+article_base_url = app.config['NEWS_ARTICLES_BASE_URL']
 
 #getting article base url
 #getting the base urls
