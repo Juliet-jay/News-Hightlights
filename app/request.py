@@ -1,58 +1,20 @@
-from app import app
+
 import urllib.request,json
-from .models import sources,article
-
-
-
-Source = sources.Sources
-Article = article.Article
+from .models import Sources,Article
 
 
 #getting api key
-api_key = app.config['NEWS_API_KEY']
+api_key = None
 
-#getting source url
-sources_base_url = app.config['NEWS_SOURCES_BASE_URL']
-article_base_url = app.config['NEWS_ARTICLES_BASE_URL']
+#Getting the news base url
+sources_base_url = None
+article_base_url = None
 
-#getting article base url
-#getting the base urls
-# headlines_base_url = None
-# everything_base_url = None
-# sources_base_url = None
-# sources_article_base_url = None
-
-# def configure_request(app):
-#         global api_key, headlines_base_url, everything_base_url, sources_base_url, sources_article_base_url
-#         api_key = 'dae9480f7d12456fb06a80eceefc97b7'
-#         print(api_key)
-#         headlines_base_url = app.config["HEADLINES_API_BASE_URL"]
-#         print(headlines_base_url.format(api_key))
-#         everything_base_url = app.config["EVERYTHING_API_BASE_URL"]
-#         sources_base_url = app.config["SOURCES_API_BASE_URL"]
-#         sources_article_base_url = app.config["SOURCES_ARTICLE_API_BASE_URL"]
-
-
-
-# def process_results(headlines_list):
-#         '''
-#         Processes headlines results and returns a list of objects
-#         '''
-#         headlines_results = []
-#         for headline_item in headlines_list:
-#                 author = headline_item.get('author')
-#                 title = headline_item.get('title')
-#                 description = headline_item.get('description')
-#                 url = headline_item.get('url')
-#                 urlToImage = headline_item.get('urlToImage')
-#                 publishedAt = headline_item.get('publishedAt')
-#                 content = headline_item.get('content')
-
-#                 if author and urlToImage and content:
-#                         headlines_object = Headlines(author, title, description, url, urlToImage, publishedAt, content)
-#                         headlines_results.append(headlines_object)
-#         return headlines_results
-                        
+def configure_request(app):
+    global api_key,sources_base_url,article_base_url  
+    api_key=app.config["NEWS_API_KEY"]
+    sources_base_url = app.config['NEWS_SOURCES_BASE_URL']
+    article_base_url = app.config['NEWS_ARTICLES_BASE_URL']
 
 
 def get_sources(category):
@@ -64,15 +26,17 @@ def get_sources(category):
     get_sources_url = sources_base_url.format(category, api_key)
 
     with urllib.request.urlopen(get_sources_url) as url:
-            get_sources_data = url.read()
-            get_sources_response = json.loads(get_sources_data)
+        
+        get_sources_data = url.read()
+        get_sources_response = json.loads(get_sources_data)
 
-            sources_results = None
-
-            if get_sources_response['sources']:
-                
-                sources_results_list = get_sources_response['sources']
-                sources_results = process_sources(sources_results_list)
+        sources_results = None
+        
+        if get_sources_response['sources']:  
+            
+            sources_results_list = get_sources_response['sources']
+            sources_results = process_sources(sources_results_list)
+            
 
     return sources_results
 
@@ -93,9 +57,9 @@ def process_sources(sources_list):
         language = source.get("language")
         country = source.get("country")
         
-        if description:   
+        if description: 
                      
-            new_source = Source(id, name, description, url, category, language, country)
+            new_source = Sources(id, name, description, url, category, language, country)
             source_results.append(new_source)
             
             
@@ -107,7 +71,7 @@ def get_article(id):
     get_article_url = article_base_url.format(id,api_key)
     
     with urllib.request.urlopen(get_article_url) as url:
-        
+
         get_article_data = url.read()
         get_article_response = json.loads(get_article_data)
 
