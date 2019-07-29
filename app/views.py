@@ -1,36 +1,26 @@
 from flask import render_template
 from app import app
-from .request import get_sources,get_articles
+from .request import get_sources
 
 #Views
-@app.route('/')
-@app.route('/MJ/')
+@app.route ('/')
 def index():
     '''
-    View root page function that returns the index page and its data
+    Returns index page and its data
     '''
 
-    # Getting the news sources
-    tech_sources = get_sources('technology')
-    entertainment_sources = get_sources('entertainment')
-    health_sources = get_sources('health')
-    general_sources = get_sources('general')
-    science_sources = get_sources('science')
-    business_sources = get_sources('business')
-    sports_sources = get_sources('sports')
-
-    title = 'MJ News App'
-    return render_template('index.html', title=title,tech=tech_sources ,
-                           entertainment=entertainment_sources,health=health_sources,general=general_sources, ,
-                           science=science_sources,business=business_sources, sports=sports_sources, )
+    #Getting the news sources
+    sport_sources = get_sources('sports')
+    title = 'News Highlight- Fast and reliable way to get news'
+    return render_template('index.html', title = title,sport_sources=sport_sources)
 
 
-@app.route("/MJ/<source_id>")
-def news_source(source_id):
-    '''
-    View new_source page function that returns a news source page and its data
-    '''
-    title=f"{source_id}-page"
-    articles = get_articles(source_id)
-    print(articles)
-    return render_template('newsSource.html', title=title,articles=articles)
+# @app.route("/sources_articles/<source_id>")
+# def source_articles(source_id):
+#     """
+#     View function for a specific source's articles
+#     """
+#     articles = get_sources_articles(source_id)
+#     title = source_id
+#     return render_template("source_articles.html", articles = articles, title=title)
+

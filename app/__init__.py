@@ -7,7 +7,7 @@ app = Flask(__name__,instance_relative_config = True)
 
 # Setting up configuration
 app.config.from_object(DevConfig)
-app.config.from_pyfile('config.py')
+app.config.from_pyfile("config.py")
 
 #Intiliazing Flask extensions
 
@@ -15,5 +15,5 @@ bootstrap=Bootstrap(app)
 
 
 from app import views
-from app import errors
+from app import error
 
