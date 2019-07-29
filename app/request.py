@@ -1,10 +1,11 @@
 from app import app
 import urllib.request,json
-from .models import sources
+from .models import sources,article
+
 
 
 Source = sources.Sources
-
+Article = article.Article
 
 
 #getting api key
@@ -56,6 +57,7 @@ article_base_url = app.config['NEWS_ARTICLE_BASE_URL']
 
 def get_sources(category):
     
+    
     '''
     Gets the json response to our url request
     '''
@@ -75,31 +77,32 @@ def get_sources(category):
     return sources_results
 
 def process_sources(sources_list):
-        """
-        Process list of sources and returns list of source objects
-        """
-        source_results = []
+    
+    """
+    Process list of sources and returns list of source objects
+    """
+    source_results = []
+    
+    for source in sources_list:
         
-        for source in sources_list:
+        id = source.get("id")
+        name = source.get("name")
+        description = source.get("description")
+        url = source.get("url")
+        category = source.get("category")
+        language = source.get("language")
+        country = source.get("country")
+        
+        if description:   
+                     
+            new_source = Source(id, name, description, url, category, language, country)
+            source_results.append(new_source)
             
-            id = source.get("id")
-            name = source.get("name")
-            description = source.get("description")
-            url = source.get("url")
-            category = source.get("category")
-            language = source.get("language")
-            country = source.get("country")
             
-            if description:            
-                new_source = Source(id, name, description, url, category, language, country)
-                source_results.append(new_source)
-                
-                
-                
-        return source_results
+            
+    return source_results
     
 def get_article(id):
-    
     
     get_article_url = article_base_url.format(id,api_key)
     
@@ -110,12 +113,38 @@ def get_article(id):
 
         article_results = None
 
-        if get_article_response['article']:
+        if get_article_response['articles']:
             
-            article_results_list = get_article_response['article']
-            article_results = process_article(article_results_list)
+            article_results_list = get_article_response['articles']
+            article_results = process_articles(article_results_list)
 
     return article_results
+
+def process_articles(article_result_list):
+    
+    '''
+    this function process the article and returns result list
+    '''
+    
+    article_results=[]
+    
+    for article in article_result_list:
+        
+        author = article.get('author')
+        title = article.get('title')
+        description = article.get('description')
+        url = article.get ('url')
+        urlToImage = article.get ('urlToImage')
+        publishedAt = article.get('publishedAt')
+        content = article.get('content')
+        
+        if urlToImage:
+            new_article= Article(author,title,description,url,urlToImage,publishedAt,content)
+            article_results.append(new_article)
+        
+    return article_results
+
+    
     
 
    
