@@ -9,10 +9,36 @@
 {% block content %}
 
 <!--Headlines-->
-<div class="cointainer">
+<div class="container">
 <h1 class="text-center"> WELCOME TO NEWS HIGHLIGHTS</h1>
-<ul>
+<div class="row">
+<h2 class="text-center">Sport news</h2>
     {{macro.displaySourcesList(sport_sources)}}
-</ul>
+</div>
+<div class="row">
+<h2 class="text-center">Business news</h2>
+    {{macro.displaySourcesList(business_sources)}}
+</div>
+<div class ="row">
+<h2 class="text-center">entertainment news</h2>
+    {{macro.displaySourcesList(entertainment_sources)}}
+    
+</div>
+<div class="row">
+    <h2 class="text-center">Health news</h2>
+    {{macro.displaySourcesList(health_sources)}}
+
+</div>
+
+<div class="row">
+    <h2 class="text-center">Tech news</h2>
+    {{macro.displaySourcesList(tech_sources)}}
+</div>
+<div class="row">
+    <h2 class="text-center">General news</h2>
+    {{macro.displaySourcesList(general_sources)}}
+</div>
+
+
 </div>
 {% endblock %}
