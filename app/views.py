@@ -1,6 +1,6 @@
 from flask import render_template
 from app import app
-from .request import get_sources
+from .request import get_sources,get_article
 
 #Views
 @app.route ('/')
@@ -20,12 +20,12 @@ def index():
     return render_template('index.html', title = title,sport_sources=sport_sources,business_sources=business_sources,entertainment_sources=entertainment_sources,health_sources=health_sources,general_sources=general_sources,tech_sources=tech_sources)
 
 
-# @app.route("/sources_articles/<source_id>")
-# def source_articles(source_id):
-#     """
-#     View function for a specific source's articles
-#     """
-#     articles = get_sources_articles(source_id)
-#     title = source_id
-#     return render_template("source_articles.html", articles = articles, title=title)
+@app.route("/sources_articles/<source_id>")
+def source_articles(source_id):
+    """
+    View function for a specific source's articles
+    """
+    articles = get_article(source_id)
+    title = source_id
+    return render_template("source_articles.html", articles = articles, title=title)
 
