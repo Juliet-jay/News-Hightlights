@@ -31,7 +31,7 @@ News Hightlight is an app that shows all the global news. And allows a user to d
 
 Please run the following command on your terminal on linux to clone our project:
 
-git clone [news-highlight](https://github.)
+git clone [news-highlight](https://github.com/Juliet-jay/News-Hightlights.git)
 After the operation you will now be able to run the application locally on your computer.
 
 ------------------------------------------------------------------------
